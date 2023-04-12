@@ -1,17 +1,18 @@
-from rest_framework.viewsets import ReadOnlyModelViewSet, ModelViewSet
+from rest_framework import status
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework import status
+from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 
-from django.shortcuts import get_object_or_404
 from django.core.exceptions import PermissionDenied
+from django.shortcuts import get_object_or_404
 
+from .models import Article, User
 from .pagination import StandardPagination
 from .permissions import IsAuthorOrReadOnly
-from .models import Article, User
-from .serializers import ArticleSerializer, UserSerializer, SubscriberSerializer, AuthorSerializer
+from .serializers import (ArticleSerializer, AuthorSerializer,
+                          SubscriberSerializer, UserSerializer)
 
 
 class ArticleAllViewSet(ReadOnlyModelViewSet):
@@ -56,8 +57,7 @@ class ArticleAuthorViewSet(ModelViewSet):
 class UserListView(ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-
-    permission_classes = (IsAdminUser, )
+    permission_classes = (IsAdminUser,)
 
 
 class SubscriberCreateView(APIView):
