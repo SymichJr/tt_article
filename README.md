@@ -20,5 +20,5 @@ Request method: ```GET```
 Get list of articles only /w subscrtiption
 
 http://127.0.0.1:8000/v1/subscribers/
-Request method: ```post```
+Request method: ```POST```
 Create a subscriber user to read sub_articles
