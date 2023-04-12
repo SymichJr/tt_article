@@ -3,15 +3,17 @@ from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
+    SUBSCRIBER = 'subscriber'
+    AUTHOR = 'author'
     USERS_ROLE =(
-        ('subscriber', 'подписчик'),
-        ('author', 'Автор'),
+        (SUBSCRIBER, 'подписчик'),
+        (AUTHOR, 'Автор'),
     )
     email = models.EmailField(
         'Электронная почта', unique=True, blank=False, max_length=254
     )
     role = models.CharField(
-        "Роль ", max_length=50, choices=USERS_ROLE, default='subscriber'
+        'Роль', max_length=50, choices=USERS_ROLE, default='subscriber'
     )
 
     @property
@@ -20,7 +22,7 @@ class User(AbstractUser):
     
     @property
     def is_author(self):
-        return self.role == 'author'
+        return self.role == "admin"
 
 class Article(models.Model):
     title = models.CharField(max_length=255)
