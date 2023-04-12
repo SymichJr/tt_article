@@ -1,7 +1,26 @@
 from django.db import models
-from django.contrib.auth import get_user_model
+from django.contrib.auth.models import AbstractUser
 
-User = get_user_model()
+
+class User(AbstractUser):
+    USERS_ROLE =(
+        ('subscriber', 'подписчик'),
+        ('author', 'Автор'),
+    )
+    email = models.EmailField(
+        'Электронная почта', unique=True, blank=False, max_length=254
+    )
+    role = models.CharField(
+        "Роль ", max_length=50, choices=USERS_ROLE, default='subscriber'
+    )
+
+    @property
+    def is_subscriber(self):
+        return self.role == 'subscriber'
+    
+    @property
+    def is_author(self):
+        return self.role == 'author'
 
 class Article(models.Model):
     title = models.CharField(max_length=255)
