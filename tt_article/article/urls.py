@@ -11,15 +11,15 @@ from .views import(
     AuthorCreateView,
 )
 
-router = DefaultRouter
-router.register(r"articles", ArticleAllViewSet)
-router.register(r"articles_sub", ArticleSubscriberViewSet)
-router.register(r"articles/(?P<article_id>\d+)", ArticleAuthorViewSet)
-router.register(r"users", UserListView)
-router.register(r"subscribers", SubscriberCreateView)
-router.register(r"authors", AuthorCreateView)
+router = DefaultRouter()
+router.register(r"articles", ArticleAllViewSet, basename="articles")
+router.register(r"articles_sub", ArticleSubscriberViewSet, basename="articles_sub")
+router.register(r"articles/(?P<article_id>\d+)", ArticleAuthorViewSet, basename="article_author")
 
 
 urlpatterns = [
     path("", include(router.urls)),
+    path("users/", UserListView.as_view()),
+    path("subscribers/", SubscriberCreateView.as_view()),
+    path('authors/', AuthorCreateView.as_view())
 ]
